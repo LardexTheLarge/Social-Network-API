@@ -1,5 +1,4 @@
 const router = require("express").Router();
-//TODO: fill with thought controller modules
 const {
   getUsers,
   getSingleUser,
@@ -7,6 +6,7 @@ const {
   deleteUser,
   updateUser,
   addFriend,
+  removeFriend,
 } = require("../../controllers/userController.js");
 
 // /api/users
@@ -19,6 +19,6 @@ router.route("/:userId").get(getSingleUser).put(updateUser).delete(deleteUser);
 router.route("/:userId/friends").post(addFriend);
 
 ///api/users/:userId/friends/:friendId
-router.route("/:userId/friends/:friendId").delete();
+router.route("/:userId/friends/:friendId").delete(removeFriend);
 
 module.exports = router;
