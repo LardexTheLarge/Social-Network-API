@@ -1,12 +1,16 @@
 const router = require("express").Router();
 //TODO: fill with thought controller modules
-const {} = require("../../controllers/thoughtController.js");
+const {
+  getThoughts,
+  getSingleThought,
+  createThought,
+} = require("../../controllers/thoughtController.js");
 
 // /api/thoughts
-router.route("/").get().post();
+router.route("/").get(getThoughts).post(createThought);
 
 // /api/courses/:thoughtsId
-router.route("/:thoughtsId").get().put().delete();
+router.route("/:thoughtsId").get(getSingleThought).put().delete();
 
 // /api/courses/:thoughtsId/reactions
 router.route("/:thoughtId/reactions").post();

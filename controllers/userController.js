@@ -1,6 +1,5 @@
 const { User, Thought } = require("../models");
 
-//TODO: add route controller
 module.exports = {
   //GET all users
   getUsers(req, res) {
