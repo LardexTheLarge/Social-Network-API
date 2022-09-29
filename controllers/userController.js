@@ -22,6 +22,7 @@ module.exports = {
   //POST a User
   createUser(req, res) {
     User.create(req.body)
+      .select("-__v")
       .then((user) => res.json(user))
       .catch((err) => {
         console.log(err);
@@ -31,6 +32,7 @@ module.exports = {
   // DELETE a user
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
+      .select("-__v")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
@@ -45,6 +47,7 @@ module.exports = {
       { $set: req.body },
       { runValidators: true, new: true }
     )
+      .select("-__v")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
@@ -59,6 +62,7 @@ module.exports = {
       { $addToSet: { friends: req.body.userId } },
       { runValidators: true, new: true }
     )
+      .select("-__v")
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })

@@ -40,8 +40,8 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
-      get: () => Date().toString(),
+      default: Date.now(),
+      get: () => Date().toString("en-US"),
     },
     username: {
       type: String,
