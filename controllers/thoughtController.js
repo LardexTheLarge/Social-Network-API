@@ -45,6 +45,7 @@ module.exports = {
   //   DELETE thought
   deleteThought(req, res) {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with this ID" })
@@ -80,13 +81,29 @@ module.exports = {
       });
   },
   //Add reaction to thoughts
-  //TODO: understand what the reactionId is for
   addThoughtReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $addToSet: { reactions: req.body } },
+      { $push: { reactions: req.body } },
       { new: true }
     )
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with that ID" })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  //Remove reaction from thoughts
+  removeThoughtReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { new: true }
+    )
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought with that ID" })
