@@ -22,7 +22,6 @@ module.exports = {
   //POST a User
   createUser(req, res) {
     User.create(req.body)
-      .select("-__v")
       .then((user) => res.json(user))
       .catch((err) => {
         console.log(err);
@@ -36,7 +35,11 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
-          : res.status(200).json(user)
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
+              .then(() => {
+                res.json({ message: "Successfully deleted user" });
+              })
+              .catch((err) => res.status(500).json(err))
       )
       .catch((err) => res.status(500).json(err));
   },
