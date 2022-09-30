@@ -4,7 +4,7 @@ const { User, Thought } = require("../models");
 module.exports = {
   //GET all thoughts
   getThoughts(req, res) {
-    Thought.find()
+    Thought.find({})
       .select("-__v")
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
@@ -85,7 +85,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $push: { reactions: req.body } },
-      { new: true }
+      { runValidators: true, new: true }
     )
       .populate({ path: "reactions", select: "-__v" })
       .select("-__v")
@@ -100,7 +100,7 @@ module.exports = {
   removeThoughtReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: { reactionId: req.body.reactionId } } },
       { new: true }
     )
       .select("-__v")
