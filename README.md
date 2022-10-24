@@ -2,7 +2,7 @@
 
 ## Description
 
-My program is a social media backend that creates users, add friends, creates posts by users and adds reactions to posts by users.
+My program is a social media backend that creates users, add friends, creates posts by users and adds reactions to posts by users. The technology used was Nodejs, Express, MongoDB, mongoose and insomnia.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
